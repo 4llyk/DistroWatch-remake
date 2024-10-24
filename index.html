@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Distrowatch Remake</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        #pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        #pagination button {
+            border: none;
+            background-color: transparent;
+            font-size: 24px;
+            color: #007bff;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #pagination button:hover {
+            transform: scale(1.2);
+            color: #0056b3;
+        }
+
+        #pagination button:disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #page-number {
+            font-size: 18px;
+            color: #333;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            padding: 0 10px;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<header class="main-header">
+    <div class="container header-container">
+        <div class="logo">
+            <img src="logo.png" alt="Distrowatch Logo" class="logo-image">
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#" class="nav-link">Página Inicial</a></li>
+                <li><a href="glossario.html" class="nav-link">Glossário</a></li>
+                <li><a href="rankings.html" class="nav-link">Rankings</a></li>
+                <li><a href="faq.html" class="nav-link">FAQ</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar" class="search-input">
+        </div>
+    </div>
+</header>
+
+<!-- Main Content Section -->
+<main class="container main-content">
+    <!-- Left Column - News -->
+    <section class="news">
+        <h2>Latest News</h2>
+        <!-- Articles -->
+        <div id="articles-container">
+            <article class="news-item">
+                <h3>Distro Release: Ubuntu 24.04</h3>
+                <p>Canonical has announced the release of Ubuntu 24.04 with long-term support. <a href="#" class="read-more">Read more...</a></p>
+            </article>
+            <article class="news-item">
+                <h3>Distro Release: Fedora 39</h3>
+                <p>Fedora 39 has been updated with the latest GNOME 44 and various improvements. <a href="#" class="read-more">Read more...</a></p>
+            </article>
+            <article class="news-item">
+                <h3>Distro Release: Parrot</h3>
+                <p>Parrot has been updated with the latest GNOME 44 and various improvements. <a href="#" class="read-more">Read more...</a></p>
+            </article>
+            <article class="news-item">
+                <h3>Distro Release: Parrot</h3>
+                <p>Parrot has been updated with the latest GNOME 44 and various improvements. <a href="#" class="read-more">Read more...</a></p>
+            </article>
+            <article class="news-item">
+                <h3>Distro Release: Parrot</h3>
+                <p>Parrot has been updated with the latest GNOME 44 and various improvements. <a href="#" class="read-more">Read more...</a></p>
+            </article>
+            <article class="news-item">
+                <h3>Distro Release: Parrot</h3>
+                <p>Parrot has been updated with the latest GNOME 44 and various improvements. <a href="#" class="read-more">Read more...</a></p>
+            </article>
+            <article class="news-item">
+                <h3>Distro Release: Fedora 39</h3>
+                <p>Fedora 39 has been updated with the latest GNOME 44 and various improvements. <a href="#" class="read-more">Read more...</a></p>
+            </article>
+        </div>
+        <!-- Pagination Buttons -->
+        <div id="pagination">
+            <button id="prev" disabled><i class="bi bi-arrow-left-circle"></i></button>
+            <span id="page-number">1</span>
+            <button id="next"><i class="bi bi-arrow-right-circle"></i></button>
+        </div>
+    </section>
+</main>
+
+<!-- Footer Section -->
+<footer class="main-footer">
+    <div class="container">
+        <p>&copy; 2024 Distrowatch - All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="#" class="footer-link">Sobre</a></li>
+            <li><a href="#" class="footer-link">Política de Privacidade</a></li>
+            <li><a href="#" class="footer-link">Fale Conosco</a></li>
+            <li><a href="#" class="footer-link">Doe pra nós</a></li>
+        </ul>
+    </div>
+</footer>
+
+<script>
+// Pagination Script
+document.addEventListener('DOMContentLoaded', () => {
+    const articlesPerPage = 5;
+    const articles = document.querySelectorAll('.news-item');
+    const totalPages = Math.ceil(articles.length / articlesPerPage);
+    let currentPage = 1;
+
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    const pageNumberDisplay = document.getElementById('page-number');
+
+    function showPage(page) {
+        const start = (page - 1) * articlesPerPage;
+        const end = start + articlesPerPage;
+
+        articles.forEach((article, index) => {
+            article.style.display = (index >= start && index < end) ? 'block' : 'none';
+        });
+
+        prevButton.disabled = page === 1;
+        nextButton.disabled = page === totalPages;
+        pageNumberDisplay.textContent = page;
+
+        // Animation for articles appearance
+        articles.forEach(article => {
+            article.style.opacity = '0';
+            setTimeout(() => { article.style.opacity = '1'; }, 100);
+        });
+    }
+
+    prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    });
+
+    nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    });
+
+    // Initialize the first page
+    showPage(currentPage);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const articles = document.querySelectorAll('.news-item');
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+
+        articles.forEach(article => {
+            const title = article.querySelector('h3').textContent.toLowerCase();
+            const description = article.querySelector('p').textContent.toLowerCase();
+
+            if (title.includes(query) || description.includes(query)) {
+                article.style.display = 'block';
+            } else {
+                article.style.display = 'none';
+            }
+        });
+    });
+});
+
+</script>
+
+</body>
+</html>
